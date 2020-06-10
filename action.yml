@@ -1,0 +1,15 @@
+# action.yml
+name: 'ref-to-tag'
+description: 'Get a docker-compatible tag from a Github ref'
+inputs:
+  ref:  # The input github ref
+    description: 'your github.ref variable'
+    required: true
+outputs:
+  tag: 
+    description: 'a Docker-compatible tag'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.ref }}
