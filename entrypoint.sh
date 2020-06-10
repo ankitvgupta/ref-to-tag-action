@@ -1,4 +1,5 @@
 #!/bin/sh -l
 
-echo "Hello $1"
-echo "::set-output name=tag::$1"
+echo "$1"
+#echo "Hello $1"
+#echo "::set-output name=tag::$1"
