@@ -7,7 +7,7 @@ jobs:
     steps:
     - name: Hello world action step
       id: hello
-      uses: ankitvgupta/ref-to-tag-action@master
+      uses: ankitvgupta/ref-to-tag-action@test
       with:
         ref: ${{ github.ref }}
     # Use the output from the `hello` step
