@@ -1,6 +1,6 @@
 #!/bin/sh -l
 
-#echo "$1"
+echo "$1"
 if  [[ $1 == refs/tags/* ]]
 then
     echo "::set-output name=tag::${1/refs\/tags\//}"
