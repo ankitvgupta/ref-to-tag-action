@@ -9,14 +9,12 @@ function clean {
 ref=$1
 head_ref=$2
 
-# If the $head_ref is empty (i.e. pushes), use $ref. Otherwise, use $head_ref (pull requests)/
+# If the $head_ref is non-empty (i.e. pull requests), use it. Otherwise, use $ref (pushes).
 if [ -n "$head_ref" ]; then
-    var_to_use=$ref
-else
     var_to_use=$head_ref
+else
+    var_to_use=$ref
 fi
-
-echo $var_to_use
 
 if  [[ $var_to_use == refs/tags/* ]]
 then
