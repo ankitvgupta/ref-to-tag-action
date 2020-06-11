@@ -5,6 +5,7 @@ This action uses your Github context to extract your branch or tag name for use 
 - On a pull request, this will use the "head" branch of your PR. i.e. the branch that you are merging into the base branch.
 - On pushing a branch, it'll return the name of the branch you're pushing to.
 - On pushing a tag, it'll return the name of the tag.
+- Any slashes in the branch/tag names are converted to dots to make them valid with Docker but unlikely to collide with other branch names.
 
 Branch -> Tag Examples:
 
@@ -14,17 +15,18 @@ Branch -> Tag Examples:
 	- push to my-branch -> my-branch
 	- release/push of v1.0.5 tag -> v1.0.5
 
-Note that you should pass both the `github.ref` and `github.head_ref`, and the script is smart enough to know which to look at depending on which are filled.
+Note that you should always pass both the `github.ref` and `github.head_ref`, and the script is smart enough to know which to look at depending on which are filled.
 
 ## Inputs
 
 ### `ref`
 
-**Required** The github ref. Pass `${{ github.ref }}`.
+**Required** Pass `${{ github.ref }}`.
 
 ### `head_ref`
 
-**Required** The head_ref. Pass `${{ github.head_ref }}`.
+**Required** Pass `${{ github.head_ref }}`.
+
 Note that if this is a push to a branch (and not a PR), the head_ref will be an empty string. That is fine, the action will know to ignore it.
 
 
