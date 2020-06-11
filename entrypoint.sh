@@ -6,29 +6,36 @@ function clean {
     echo "$cleaned"
 }
 
-#clean "$1"
-result="$(clean $1)"
-#echo $result
-if  [[ $1 == refs/tags/* ]]
+ref=$1
+head_ref=$2
+
+# If the $head_ref is empty (i.e. pushes), use $ref. Otherwise, use $head_ref (pull requests)/
+if [ -n "$head_ref" ]; then
+    var_to_use=$ref
+else
+    var_to_use=$head_ref
+fi
+
+if  [[ $var_to_use == refs/tags/* ]]
 then
     # These look something like refs/tags/<tag-name>. Extract <tag-name>.
-    result="$(clean ${1/refs\/tags\//})"
+    result="$(clean ${var_to_use/refs\/tags\//})"
     echo "::set-output name=tag::$result"
-elif  [[ $1 == refs/heads/* ]]
+elif  [[ $var_to_use == refs/heads/* ]]
 then
 	# These look something like refs/heads/<branch-name>. Extract <branch-name>.
-    result="$(clean ${1/refs\/heads\//})"
+    result="$(clean ${var_to_use/refs\/heads\//})"
     echo "::set-output name=tag::$result"
-elif  [[ $1 == refs/pull/* ]]
+elif  [[ $var_to_use == refs/pull/* ]]
 then
     # These look something like refs/pull/<pr-number>/merge. Extract <pr-number>
-    remove_front="${1/refs\/pull\//}"
+    remove_front="${var_to_use/refs\/pull\//}"
     remove_back="${remove_front%/merge}"
     result="$(clean $remove_back)"
     echo "::set-output name=tag::pr-$result"
 else
 	# If it doesn't match one of those, it's just a vanilla ref. Make sure it's docker-compatible.
-	result="$(clean $1)"
+	result="$(clean $var_to_use)"
     echo "::set-output name=tag::$result"
 fi
 

@@ -9,11 +9,12 @@ jobs:
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
       run: echo "$GITHUB_CONTEXT"
-    - name: Hello world action step
-      id: hello
+    - name: Get the Ref
+      id: get-ref
       uses: ankitvgupta/ref-to-tag-action@test
       with:
         ref: ${{ github.ref }}
+        head_ref: ${{ github.head_ref }}
     # Use the output from the `hello` step
     - name: Get the output time
-      run: echo "The time was ${{ steps.hello.outputs.tag }}"
+      run: echo "The time was ${{ steps.get-ref.outputs.tag }}"
