@@ -1,9 +1,9 @@
-on: [pull_request]
+on: [pull_request, push]
 
 jobs:
-  hello_world_job:
+  get-ref-example:
     runs-on: ubuntu-latest
-    name: A job to say hello
+    name: get-ref-example
     steps:
     - name: Dump GitHub context
       env:
@@ -15,6 +15,5 @@ jobs:
       with:
         ref: ${{ github.ref }}
         head_ref: ${{ github.head_ref }}
-    # Use the output from the `hello` step
-    - name: Get the output time
-      run: echo "The time was ${{ steps.get-ref.outputs.tag }}"
+    - name: Get the tag
+      run: echo "The tag was ${{ steps.get-ref.outputs.tag }}"
