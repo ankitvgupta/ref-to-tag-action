@@ -5,7 +5,7 @@ inputs:
   ref:  # The input github ref
     description: 'your github.ref variable'
     required: true
-  head_ref: The input head ref
+  head_ref: # The input head ref
     description: 'your github.head_ref variable'
     required: true
 outputs:
