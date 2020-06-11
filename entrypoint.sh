@@ -16,6 +16,8 @@ else
     var_to_use=$head_ref
 fi
 
+echo $var_to_use
+
 if  [[ $var_to_use == refs/tags/* ]]
 then
     # These look something like refs/tags/<tag-name>. Extract <tag-name>.
