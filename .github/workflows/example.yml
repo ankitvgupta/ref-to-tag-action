@@ -1,0 +1,19 @@
+on: [pull_request, push]
+
+jobs:
+  get-ref-example:
+    runs-on: ubuntu-latest
+    name: get-ref-example
+    steps:
+    - name: Dump GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: echo "$GITHUB_CONTEXT"
+    - name: Get the Ref
+      id: get-ref
+      uses: ankitvgupta/ref-to-tag-action@test
+      with:
+        ref: ${{ github.ref }}
+        head_ref: ${{ github.head_ref }}
+    - name: Get the tag
+      run: echo "The tag was ${{ steps.get-ref.outputs.tag }}"
