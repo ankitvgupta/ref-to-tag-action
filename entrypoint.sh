@@ -20,23 +20,23 @@ if  [[ $var_to_use == refs/tags/* ]]
 then
     # These look something like refs/tags/<tag-name>. Extract <tag-name>.
     result="$(clean ${var_to_use/refs\/tags\//})"
-    echo "::set-output name=tag::$result"
+    echo "tag=$result" >> $GITHUB_OUTPUT"
 elif  [[ $var_to_use == refs/heads/* ]]
 then
 	# These look something like refs/heads/<branch-name>. Extract <branch-name>.
     result="$(clean ${var_to_use/refs\/heads\//})"
-    echo "::set-output name=tag::$result"
+    echo "tag=$result" >> $GITHUB_OUTPUT"
 elif  [[ $var_to_use == refs/pull/* ]]
 then
     # These look something like refs/pull/<pr-number>/merge. Extract <pr-number>
     remove_front="${var_to_use/refs\/pull\//}"
     remove_back="${remove_front%/merge}"
     result="$(clean $remove_back)"
-    echo "::set-output name=tag::pr-$result"
+    echo "tag=pr-$result" >> $GITHUB_OUTPUT"
 else
 	# If it doesn't match one of those, it's just a vanilla ref. Make sure it's docker-compatible.
 	result="$(clean $var_to_use)"
-    echo "::set-output name=tag::$result"
+    echo "tag=$result" >> $GITHUB_OUTPUT"
 fi
 
 
